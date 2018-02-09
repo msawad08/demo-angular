@@ -66,27 +66,31 @@ app.controller('DynamicFormController', function ($scope, $log) {
 
       $scope.backButtonClick = function(index){
         if(index > 1) {
-          $scope.entity[index].active = true;
+          $scope.entity[index - 2].active = true;
+          $scope.entity[index - 1].active = false;
         }
       }
 
       $scope.nextButtonClick = function(index){
-        $scope.entity[index].active = true;
-        $scope.entity[index].visited = true;
-        $scope.entity[index - 1].active = false;
-        $scope.entity[index - 1].visited = true;
+        if(index < $scope.entity.length) {
+          $scope.entity[index].active = true;
+          $scope.entity[index].visited = true;
+          $scope.entity[index - 1].active = false;
+          $scope.entity[index - 1].visited = true;
+        }
         // console.log(index,$scope.entity);\
       }
 
       $scope.nextStage = function(index) {
         for(var i = 1;i <= index;i++) {
-          $scope.entity[i].active = true;
-          $scope.entity[i].visited = true;
+          $scope.entity[i - 1].active = true;
+          $scope.entity[i - 1].visited = true;
         }
-        for(var i = index + 1;i < $scope.entity.length;i++) {
-          $scope.entity[i].active = false;
-          $scope.entity[i].visited = true;
+        for(var i = index + 1;i <= $scope.entity.length;i++) {
+          $scope.entity[i - 1].active = false;
+          $scope.entity[i - 1].active = false;
         }
+        $scope.nextButtonClick(index)
       }
 })
 

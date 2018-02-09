@@ -6,6 +6,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script src="app.js"></script>
     <style>
+    /* style="border-radius: 25px; background-color: blue; width: 50px; height: 50px;color: white; text-align: center; line-height: 50px;" */
+      .baseClass {
+        border-radius: 25px;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+      }
     </style>
   </head>
 
@@ -13,7 +21,7 @@
   <div ng-controller="DynamicFormController">
     <h3 style="text-align: center">DataSet</h3>
     <div ng-repeat="entities in entity" style="float: left; margin-left: 65px; vertical-align: middle">
-      <div style="border-radius: 25px; background-color: blue; width: 50px; height: 50px;color: white; text-align: center; line-height: 50px;" ng-style="!entities.active && {'background-color': 'white', 'color': 'blue', 'border-color': 'blue', 'border-style': 'ridge', 'border-width': '1px'}" ng-click="nextStage(entities.index)">
+      <div class="baseClass" ng-style="!entities.active ? {'background-color': 'white', 'color': 'blue', 'border-color': 'blue', 'border-style': 'ridge', 'border-width': '1px'}: {'background-color': 'blue','color': 'white'}" ng-click="nextStage(entities.index)">
         {{ entities.index }}
       </div>
       <div ng-if="entities.index < entity.length" style="width: 150px; height: 2px; background-color: #D3D3D3; position: relative; top: -26px; left: 57px;" ng-style="entities.visited && {'background-color': 'blue'}">
