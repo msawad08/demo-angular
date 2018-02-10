@@ -1,6 +1,6 @@
 var app = angular.module('demo', []);
 
-app.controller('DynamicFormController', function ($scope, $log) {
+app.controller('DynamicFormController', function ($scope) {
 
     // we would get this from the api
     $scope.steps = [
@@ -49,9 +49,7 @@ app.controller('DynamicFormController', function ($scope, $log) {
         }
     ];
 
-    $scope.submitForm = function () {
-        $log.debug($scope.steps);
-    };
+
 
     $scope.backButtonClick = function (index) {
         $scope.steps[index].active = false;
@@ -67,7 +65,6 @@ app.controller('DynamicFormController', function ($scope, $log) {
     };
 
     $scope.nextStage = function (index) {
-        console.log(index)
         for(var i = 0; i < $scope.steps.length; i++)
         {
             $scope.steps[i].active = (i === index);
