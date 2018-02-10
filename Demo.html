@@ -6,7 +6,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script src="app.js"></script>
     <style>
-        /* style="border-radius: 25px; background-color: blue; width: 50px; height: 50px;color: white; text-align: center; line-height: 50px;" */
         .baseClass {
             border-radius: 25px;
             width: 50px;
@@ -21,21 +20,26 @@
           transition: all 200ms;
           opacity: 0.5;
         }
-        .form-control:focus + .form-control-placeholder {
+        .form-control:focus + .form-control-placeholder,
+        .form-control:valid + .form-control-placeholder {
           transform: translate3d(0, -100%, 0);
           opacity: 1;
+        }
+        .btn {
+          width: 160px;
+          border-radius: 20px;
         }
     </style>
 </head>
 
 <body ng-app="demo">
 <div ng-controller="DynamicFormController">
-    <h3 style="text-align: center">DataSet</h3>
+    <h3 style="text-align: center; margin-bottom: 30px">DataSet</h3>
     <div class="container" style="height: 80px">
       <div class="row" style="text-align:center">
         <div ng-repeat="step in steps" style="float: left;" class="col-md-3">
             <button class="baseClass" ng-disabled="!step.visited"
-                 ng-style="step.visited?{'background-color': 'blue','color': 'white'}:{'background-color': 'white', 'color': 'blue', 'border-color': 'blue', 'border-style':'ridge', 'border-width': '1px'}"
+                 ng-style="step.visited && $index < steps.length - 1?{'background-color': '#428bca','color': 'white'}: !step.visited && $index < steps.length - 1? {'background-color': 'white', 'color': 'blue', 'border-color': 'blue', 'border-style':'ridge', 'border-width': '1px'}: {'background-color': '#07b507', 'border-color': 'green', 'color': 'white'}"
                  ng-click="nextStage(step.index)">
                 {{ $index+1 }}
             </button>
@@ -47,109 +51,30 @@
             <h4>{{ step.label }}</h4>
         </div>
       </div>
-    <div class="row">
-      <div ng-repeat="step in steps">
-          <div ng-if="step.active" style="padding-top:25px ">
-              <form name="step.name" ng-submit="nextButtonClick(step.index)">
-                  <div ng-repeat="field in step.fields">
-                      <div ng-if="step.active && field.type=='text'" class="form-group">
-                          <input type="{{ field.type }}" dynamic-name="field.name" id="{{field.name}}"
-                                 data-ng-model="field.data" class="form-control"  ng-required="field.required" style="width: 30%"/>
-                          <label class="control-label form-control-placeholder">{{field.name}}</label>
-                      </div>
-                  </div>
-                  <div style="text-align: center">
-                      <button ng-disabled="step.index == 0" ng-click="backButtonClick(step.index)">Back</button>
-                      <button ng-disabled="step.index == length-1" type="submit">Next</button>
-                  </div>
-              </form>
-          </div>
-      </div>
+      <div ng-repeat="step in steps" style="margin-top: 25px">
+        <div class="row">
+            <div ng-if="step.active" style="padding-top:25px" class="col-md-4 col-md-offset-4">
+                <form name="step.name" ng-submit="nextButtonClick(step.index)" ng-if="$index < steps.length - 1">
+                    <div ng-repeat="field in step.fields">
+                        <div ng-if="step.active && field.type=='text'" class="form-group" style="margin-bottom: 0px">
+                            <input type="{{ field.type }}" dynamic-name="field.name" id="{{field.name}}"
+                                   data-ng-model="field.data" class="form-control"  ng-required="field.required" />
+                            <label class="control-label form-control-placeholder" for="{{field.name}}">{{field.name}}</label>
+                        </div>
+                    </div>
+                    <div style="text-align: center">
+                        <button ng-disabled="step.index == 0" ng-click="backButtonClick(step.index)" class="btn btn-default" style="background-color: #D3D3D3;">Back</button>
+                        <button ng-disabled="step.index == length-1" type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+                <div ng-if="$index == steps.length - 1" style="font-size: 30px; text-align: center; margin-top: 50px">
+                  {{ step.success }}
+                </div>
+            </div>
+        </div>
     </div>
 
   </div>
-</div>
-</body>
-
-<!-- <form name="myForm" class="form-horizontal" role="form" ng-submit="submitForm()">
-<div ng-repeat="field in steps.fields">
- <ng-form name="form">
-   TEXT FIELDS
-   <div ng-if="field.type=='text'" class="form-group">
-     <label class="col-sm-2 control-label">{{field.label}}</label>
-     <div class="col-sm-6">
-       <input type="{{ field.type }}" dynamic-name="field.name" id="{{field.name}}" data-ng-model="field.data"  class="form-control" required/>
-        <span ng-show="myForm.{{field.name}}.$dirty && myForm.{{field.name}}.$error.required">Required!</span>.
-        <span  data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.required'}}">Required!</span>
-     </div>
-   </div>
-
-   EMAIL FIELDS
-   <div ng-if="field.type=='email'" class="form-group">
-     <label class="col-sm-2 control-label">{{field.label}}</label>
-     <div class="col-sm-6">
-       <input type="{{ field.type }}" dynamic-name="field.name" data-ng-model="field.data" class="form-control" required/>
-        <span data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.required'}}">Required!</span>
-        <span data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.email'}}">Not email!</span>
-     </div>
-   </div>
-
-   PASSWORD FIELDS
-   <div ng-if="field.type=='password'" class="form-group" >
-     <label class="col-sm-2 control-label">{{field.label}}</label>
-     <div class="col-sm-6">
-       <input type="{{ field.type }}" dynamic-name="field.name" data-ng-model="field.data" ng-minlength={{field.min}} ng-maxlength={{field.max}} class="form-control" required/>
-        <span data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.required'}}">Required!</span>
-        <span data-ng-show=" {{'!form.'+field.name+'.required && (form.'+field.name+'.$error.minlength || form.'+field.name+'.$error.maxlength)' }}">Passwords must be between 8 and 20 characters.</span>
-       </div>
-   </div>
-
-   SELECT FIELDS
-   <div ng-if="field.type=='select'" class="form-group" >
-     <label class="col-sm-2 control-label">{{field.label}}</label>
-     <div class="col-sm-6">
-       <select data-ng-model="field.data" ng-options="option.name for option in field.options" class="form-control" required/>
-     </div>
-   </div>
-
-   RADIO FIELDS
-   <div ng-if="field.type=='radio'" class="form-group">
-     <label class="col-sm-2 control-label">{{field.label}}</label>
-     <div class="col-sm-6">
-
-       <div class="checkbox" ng-repeat="option in field.options" >
-                 <label>
-           <input type="radio" data-ng-model="field.data"  name="taskGroup"  id="{{option.name}}" value="{{option.id}}">{{option.name}}
-         </label>
-               </div>
-     </div>
-   </div>
-
-   CHECKBOX FIELDS
-   <div ng-if="field.type=='checkbox'" class="form-group" >
-     <label class="col-sm-2 control-label">{{field.label}}</label>
-     <div class="col-sm-6">
-              <div class="checkbox" ng-repeat="option in field.options" >
-                 <label>
-                   <input type="checkbox" data-ng-model="option.data"  name="taskGroup"  id="{{option.name}}" value="{{option.id}}" >{{option.name}}
-                 </label>
-               </div>
-
-     </div>
-   </div>
-
- </ng-form>
-
-</div>
-
-
- <br/>
- <button ng-disabled="myForm.$invalid" type="submit" id="submit">Submit</button>
- <br/>
- <pre>{{steps|json}}</pre>
-  <br/>
-
-</form> -->
 </div>
 </body>
 

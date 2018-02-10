@@ -14,12 +14,6 @@ app.controller('DynamicFormController', function ($scope, $log) {
                     {type: "text", name: "Dataset Name", label: "Name", required: true, data: ""},
                     {type: "text", name: "Path", label: "Name", required: true, data: ""},
                     {type: "text", name: "Config", label: "Name", required: true, data: ""},
-                    // {type: "radio", name: "color_id", label: "Colors" , options:[{id: 1, name: "orange"},{id: 2, name: "pink"},{id: 3, name: "gray"},{id: 4, name: "cyan"}], required: true, data:""},
-                    // {type: "email", name: "emailUser", label: "Email" , required: true, data:""},
-                    // {type: "text", name: "city", label: "City" , required: true, data:""},
-                    // {type: "password", name: "pass", label: "Password" , min: 6, max:20, required: true, data:""},
-                    // {type: "select", name: "teacher_id", label: "Teacher" , options:[{name: "Mark"},{name: "Claire"},{name: "Daniel"},{name: "Gary"}], required: true, data:""},
-                    // {type: "checkbox", name: "car_id", label: "Cars" , options:[{id: 1, name: "bmw"},{id: 2, name: "audi"},{id: 3, name: "porche"},{id: 4, name: "jaguar"}], required: true, data:""}
                 ]
         },
         {
@@ -31,13 +25,7 @@ app.controller('DynamicFormController', function ($scope, $log) {
                 [
                     {type: "text", name: "Configuration 1", label: "Name", required: true, data: ""},
                     {type: "text", name: "Configuration 2", label: "Name", required: true, data: ""},
-                    {type: "text", name: "Configuration 3", label: "Name", required: true, data: ""},
-                    // {type: "radio", name: "color_id", label: "Colors" , options:[{id: 1, name: "orange"},{id: 2, name: "pink"},{id: 3, name: "gray"},{id: 4, name: "cyan"}], required: true, data:""},
-                    // {type: "email", name: "emailUser", label: "Email" , required: true, data:""},
-                    // {type: "text", name: "city", label: "City" , required: true, data:""},
-                    // {type: "password", name: "pass", label: "Password" , min: 6, max:20, required: true, data:""},
-                    // {type: "select", name: "teacher_id", label: "Teacher" , options:[{name: "Mark"},{name: "Claire"},{name: "Daniel"},{name: "Gary"}], required: true, data:""},
-                    // {type: "checkbox", name: "car_id", label: "Cars" , options:[{id: 1, name: "bmw"},{id: 2, name: "audi"},{id: 3, name: "porche"},{id: 4, name: "jaguar"}], required: true, data:""}
+                    {type: "text", name: "Configuration 3", label: "Name", required: true, data: ""}
                 ]
         },
         {
@@ -50,31 +38,14 @@ app.controller('DynamicFormController', function ($scope, $log) {
                     {type: "text", name: "Doc 1", label: "Name", required: true, data: ""},
                     {type: "text", name: "Doc 2", label: "Name", required: true, data: ""},
                     {type: "text", name: "Doc 3", label: "Name", required: true, data: ""},
-                    // {type: "radio", name: "color_id", label: "Colors" , options:[{id: 1, name: "orange"},{id: 2, name: "pink"},{id: 3, name: "gray"},{id: 4, name: "cyan"}], required: true, data:""},
-                    // {type: "email", name: "emailUser", label: "Email" , required: true, data:""},
-                    // {type: "text", name: "city", label: "City" , required: true, data:""},
-                    // {type: "password", name: "pass", label: "Password" , min: 6, max:20, required: true, data:""},
-                    // {type: "select", name: "teacher_id", label: "Teacher" , options:[{name: "Mark"},{name: "Claire"},{name: "Daniel"},{name: "Gary"}], required: true, data:""},
-                    // {type: "checkbox", name: "car_id", label: "Cars" , options:[{id: 1, name: "bmw"},{id: 2, name: "audi"},{id: 3, name: "porche"},{id: 4, name: "jaguar"}], required: true, data:""}
                 ]
         },
         {
             index: 3,
-            label: "Documentation",
+            label: "Success",
             visited: false,
             active: false,
-            fields:
-                [
-                    {type: "text", name: "Doc 1", label: "Name", required: true, data: ""},
-                    {type: "text", name: "Doc 2", label: "Name", required: true, data: ""},
-                    {type: "text", name: "Doc 3", label: "Name", required: true, data: ""},
-                    // {type: "radio", name: "color_id", label: "Colors" , options:[{id: 1, name: "orange"},{id: 2, name: "pink"},{id: 3, name: "gray"},{id: 4, name: "cyan"}], required: true, data:""},
-                    // {type: "email", name: "emailUser", label: "Email" , required: true, data:""},
-                    // {type: "text", name: "city", label: "City" , required: true, data:""},
-                    // {type: "password", name: "pass", label: "Password" , min: 6, max:20, required: true, data:""},
-                    // {type: "select", name: "teacher_id", label: "Teacher" , options:[{name: "Mark"},{name: "Claire"},{name: "Daniel"},{name: "Gary"}], required: true, data:""},
-                    // {type: "checkbox", name: "car_id", label: "Cars" , options:[{id: 1, name: "bmw"},{id: 2, name: "audi"},{id: 3, name: "porche"},{id: 4, name: "jaguar"}], required: true, data:""}
-                ]
+            success: "Successfully Submitted"
         }
     ];
 
@@ -103,16 +74,3 @@ app.controller('DynamicFormController', function ($scope, $log) {
         }
     }
 })
-
-//   .directive("dynamicName",function($compile){
-//     return {
-//         restrict:"A",
-//         terminal:true,
-//         priority:1000,
-//         link:function(scope,element,attrs){
-//             element.attr('name', scope.$eval(attrs.dynamicName));
-//             element.removeAttr("dynamic-name");
-//             $compile(element)(scope);
-//         }
-//     }
-// })
