@@ -24,12 +24,12 @@
         <button class="baseClass" ng-disabled="!step.visited"
              ng-style="step.visited?{'background-color': 'blue','color': 'white'}:{'background-color': 'white', 'color': 'blue', 'border-color': 'blue', 'border-style':'ridge', 'border-width': '1px'}"
              ng-click="nextStage(step.index)">
-            {{ step.index }}
+            {{ $index+1 }}
         </button>
 
-        <div ng-if="step.index < steps.length-1"
+        <div ng-if="$index < steps.length-1"
              style="width: 150px; height: 2px; background-color: #D3D3D3; position: relative; top: -26px; left: 57px;"
-             ng-style="step.visited && {'background-color': 'blue'}">
+             ng-style="steps[$index + 1].visited && {'background-color': 'blue'}">
         </div>
         <h4>{{ step.label }}</h4>
     </div>
@@ -48,8 +48,8 @@
                     </div>
                 </div>
                 <div style="text-align: center">
-                    <button ng-disabled="step.index == 0" ng-click="backButtonClick(step.index)">Back</button>
-                    <button ng-disabled="step.index == length-1" type="submit">Next</button>
+                    <button ng-disabled="$index == 0" ng-click="backButtonClick($index)">Back</button>
+                    <button ng-disabled="$index == steps.length-1" type="submit">Next</button>
                 </div>
             </form>
         </div>
